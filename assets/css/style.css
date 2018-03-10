@@ -48,7 +48,9 @@ div.directions ol li {
 button {
     cursor: pointer;
     font-weight: 600;
+    transition: width 2s, height 2s, transform 2s;
 }
+
 
 #gameVal, #wins, #losses, #currentWeight {
     color: black;
@@ -110,11 +112,14 @@ button {
 .flex img {
     width:100%;
     border: 3px solid darkred;
+    transition: width 1s, height 1s;
 }
 
 .flex img:hover {
     opacity: .5;
     cursor: pointer;
+    width: 75%;
+    transition-timing-function: ease;
 }
 
 footer {
