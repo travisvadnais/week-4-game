@@ -15,6 +15,7 @@ $(document).ready(() => {
     losses = 0;
     spotUsed=false;
   };
+
   const softReset = () => {
     valFirst = generateRandom(1, 12);
     valSecond = generateRandom(1, 12);
@@ -25,6 +26,7 @@ $(document).ready(() => {
     gameVal = generateRandom(19, 102);
     $(".bigBoldGameVal").html(gameVal);
   };
+  
   const generateRandom = (a, b) => {return Math.floor(Math.random() * b) + a};
   const updateCurrentWeight = () => {$(".bigBoldCurrentWeight").html(currentWeight)};
   
@@ -39,7 +41,7 @@ $(document).ready(() => {
       $(".bigBoldLosses").html(losses);    
       softReset();
     }
-  };          
+  };     
 
   resetGame();
 
@@ -62,21 +64,19 @@ $(document).ready(() => {
     addWeight(plateVal);
   }));
 
-  let addWeight = val => {
+  $("#getSpot").on("click", (() => {
+    (spotUsed) ? alert("You're on your own, Bro!") : updateSpot()
+  }));
+
+  const addWeight = val => {
     currentWeight += val;
     updateCurrentWeight();
     calculateScore();
   };
 
-  $('#getSpot').on('click', (() => {
-    switch (spotUsed) {
-      case false: 
-        softReset();
-        spotUsed=true;
-        $().button('dispose')
-        break;
-      default:
-        alert("You're on your own Bro!!!");
-    }
-  }));
+  const updateSpot = () => {
+    softReset();
+    spotUsed = true;
+    $().button('dispose')
+  }
 });
