@@ -112,7 +112,7 @@ button {
 .flex img {
     width:100%;
     border: 3px solid darkred;
-    transition: width 1s, height 1s;
+    transition: width 100ms, height 100ms;
 }
 
 .flex img:hover {
