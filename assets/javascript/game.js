@@ -26,46 +26,19 @@ $(document).ready(() => {
     gameVal = generateRandom(19, 102);
     $(".bigBoldGameVal").html(gameVal);
   };
-  
+
   const generateRandom = (a, b) => {return Math.floor(Math.random() * b) + a};
   const updateCurrentWeight = () => {$(".bigBoldCurrentWeight").html(currentWeight)};
-  
-  const calculateScore = () => {
-    if (currentWeight === gameVal) {
-      wins++;
-      $(".bigBoldWins").html(wins);    
-      softReset();
-    }
-    else if (currentWeight > gameVal) {
-      losses++;
-      $(".bigBoldLosses").html(losses);    
-      softReset();
-    }
-  };     
+
+  const updateScore = (result) => {
+    (result == "wins") ? $(".bigBoldWins").html(wins) : $(".bigBoldLosses").html(losses);
+    softReset();
+  }
 
   resetGame();
 
   $(".rounded-circle").on("click", ((event) => {
-    let plateId = event.target.id;
-    let plateVal;
-    switch (plateId) {
-      case "plate1":
-        plateVal = valFirst;
-        break;
-      case "plate2":
-        plateVal = valSecond;
-        break;
-      case "plate3":
-        plateVal = valThird;
-        break;
-      default:
-        plateVal = valFourth;
-    }
-    addWeight(plateVal);
-  }));
-
-  $("#getSpot").on("click", (() => {
-    (spotUsed) ? alert("You're on your own, Bro!") : updateSpot()
+    addWeight(getVal(event.target.id))
   }));
 
   const addWeight = val => {
@@ -73,6 +46,28 @@ $(document).ready(() => {
     updateCurrentWeight();
     calculateScore();
   };
+
+  const calculateScore = () => {
+    if (currentWeight === gameVal) {
+      wins++;
+      updateScore("wins");
+    }
+    else if (currentWeight > gameVal) {
+      losses++
+      updateScore("losses");
+    }
+  };     
+  //Object Literal replaces switch case. plateId comes in as a KEY and exits as a VALUE
+  const getVal = plateId => ({
+    "plate1": plateVal = valFirst,
+    "plate2": plateVal = valSecond,
+    "plate3": plateVal = valThird,
+    "plate4": plateVal = valFourth
+  })[plateId]
+
+  $("#getSpot").on("click", (() => {
+    (spotUsed) ? alert("You're on your own, Bro!") : updateSpot()
+  }));
 
   const updateSpot = () => {
     softReset();
